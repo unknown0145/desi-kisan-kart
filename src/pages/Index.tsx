@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 import { ArrowRight, Package, Truck, IndianRupee, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
@@ -106,52 +107,56 @@ const categories = [
 ];
 
 const Index = () => {
+  const { user } = useAuth();
+
   return (
     <div>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-50 to-yellow-50 py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Fresh Farm Produce, <br /> Directly To Your Home
-              </h1>
-              <p className="text-lg text-gray-600 mb-6">
-                Buy directly from farmers across India. No middlemen, better prices, 
-                fresher produce.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button
-                  size="lg"
-                  className="bg-kisan-green hover:bg-kisan-lightGreen"
-                  asChild
-                >
-                  <Link to="/products">Browse Products</Link>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-kisan-orange text-kisan-orange hover:bg-kisan-orange hover:text-white"
-                  asChild
-                >
-                  <Link to="/register?type=farmer">Join as Farmer</Link>
-                </Button>
+      {/* Hero Section - Only show for non-logged in users */}
+      {!user && (
+        <section className="bg-gradient-to-r from-green-50 to-yellow-50 py-16">
+          <div className="container-custom">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                  Fresh Farm Produce, <br /> Directly To Your Home
+                </h1>
+                <p className="text-lg text-gray-600 mb-6">
+                  Buy directly from farmers across India. No middlemen, better prices, 
+                  fresher produce.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Button
+                    size="lg"
+                    className="bg-kisan-green hover:bg-kisan-lightGreen"
+                    asChild
+                  >
+                    <Link to="/products">Browse Products</Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="border-kisan-orange text-kisan-orange hover:bg-kisan-orange hover:text-white"
+                    asChild
+                  >
+                    <Link to="/register?type=farmer">Join as Farmer</Link>
+                  </Button>
+                </div>
               </div>
-            </div>
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&q=80&w=500"
-                alt="Fresh farm produce"
-                className="w-full rounded-lg shadow-lg"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
-                <p className="text-kisan-green font-bold">100% Authentic</p>
-                <p className="text-sm text-gray-600">Direct from farmers</p>
+              <div className="relative">
+                <img
+                  src="https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&q=80&w=500"
+                  alt="Fresh farm produce"
+                  className="w-full rounded-lg shadow-lg"
+                />
+                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
+                  <p className="text-kisan-green font-bold">100% Authentic</p>
+                  <p className="text-sm text-gray-600">Direct from farmers</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Features Section */}
       <section className="py-16">

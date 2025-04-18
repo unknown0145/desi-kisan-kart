@@ -1,11 +1,12 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, IndianRupee } from "lucide-react";
+import { ShoppingCart, IndianRupee, Plus, Minus } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/context/CartContext";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: Product;
@@ -13,11 +14,30 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
+  const [showQuantity, setShowQuantity] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    addToCart(product, quantity);
+    setShowQuantity(true);
+  };
+
+  const handleIncrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setQuantity(prev => prev + 1);
     addToCart(product, 1);
+  };
+
+  const handleDecrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1);
+      addToCart(product, -1);
+    }
   };
 
   return (
@@ -49,13 +69,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </p>
         </CardContent>
         <CardFooter className="p-4 pt-0">
-          <Button
-            onClick={handleAddToCart}
-            className="w-full bg-kisan-green hover:bg-kisan-lightGreen transition-colors"
-          >
-            <ShoppingCart className="h-4 w-4 mr-2" />
-            Add to Cart
-          </Button>
+          {!showQuantity ? (
+            <Button
+              onClick={handleAddToCart}
+              className="w-full bg-kisan-green hover:bg-kisan-lightGreen transition-colors"
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Add to Cart
+            </Button>
+          ) : (
+            <div className="flex items-center justify-between w-full">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleDecrement}
+                className="h-8 w-8"
+              >
+                <Minus className="h-4 w-4" />
+              </Button>
+              <span className="font-medium">{quantity}</span>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleIncrement}
+                className="h-8 w-8"
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </CardFooter>
       </Link>
     </Card>

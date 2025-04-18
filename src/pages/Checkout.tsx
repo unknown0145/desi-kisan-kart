@@ -1,10 +1,11 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
+import AddressSelector from "@/components/AddressSelector";
 import {
   Form,
   FormControl,
@@ -13,7 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,12 +29,6 @@ import {
 import { useCart } from "@/context/CartContext";
 
 const formSchema = z.object({
-  fullName: z.string().min(3, "Full name must be at least 3 characters"),
-  phone: z.string().min(10, "Enter a valid phone number"),
-  address: z.string().min(10, "Address must be at least 10 characters"),
-  city: z.string().min(2, "City must be at least 2 characters"),
-  state: z.string().min(2, "State must be at least 2 characters"),
-  pincode: z.string().length(6, "Enter a valid 6-digit pincode"),
   paymentMethod: z.enum([
     "upi",
     "netbanking",
@@ -46,8 +40,10 @@ const formSchema = z.object({
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { items, getCartTotal, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState<number>();
   
   const cartTotal = getCartTotal();
   const shippingFee = cartTotal >= 500 ? 0 : 60;
@@ -56,17 +52,22 @@ const Checkout = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: "",
-      phone: "",
-      address: "",
-      city: "",
-      state: "",
-      pincode: "",
       paymentMethod: "upi",
     },
   });
 
+  useEffect(() => {
+    if (items.length === 0) {
+      navigate("/cart");
+    }
+  }, [items.length, navigate]);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!selectedAddressId) {
+      toast.error("Please select a delivery address");
+      return;
+    }
+
     setIsProcessing(true);
     
     // Simulate order processing
@@ -82,14 +83,9 @@ const Checkout = () => {
     }
     
     clearCart();
-    navigate("/");
+    navigate("/profile?tab=orders");
     setIsProcessing(false);
   };
-
-  if (items.length === 0) {
-    navigate("/cart");
-    return null;
-  }
 
   return (
     <div className="container-custom py-12">
@@ -102,91 +98,11 @@ const Checkout = () => {
               <CardHeader>
                 <CardTitle>Delivery Address</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="fullName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your full name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your phone number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="address"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Address</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your full address" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="city"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>City</FormLabel>
-                        <FormControl>
-                          <Input placeholder="City" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="state"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>State</FormLabel>
-                        <FormControl>
-                          <Input placeholder="State" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="pincode"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Pincode</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter 6-digit pincode" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+              <CardContent>
+                <AddressSelector
+                  onSelect={(address) => setSelectedAddressId(address.id)}
+                  selectedAddressId={selectedAddressId}
+                  showActions={false}
                 />
               </CardContent>
             </Card>
