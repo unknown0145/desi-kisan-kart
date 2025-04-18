@@ -46,6 +46,11 @@ const Header = () => {
                   Dashboard
                 </Link>
               )}
+              {userType === "customer" && (
+                <Link to="/profile" className="text-gray-700 hover:text-kisan-green transition duration-300">
+                  My Profile
+                </Link>
+              )}
             </nav>
           ) : null}
 
@@ -79,7 +84,7 @@ const Header = () => {
                     </div>
                     <DropdownMenuItem asChild>
                       <Link to={userType === "farmer" ? "/farmer-dashboard" : "/profile"} className="cursor-pointer">
-                        {userType === "farmer" ? "Dashboard" : "Profile"}
+                        {userType === "farmer" ? "Dashboard" : "My Profile"}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem
