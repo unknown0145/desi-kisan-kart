@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Package, Truck, IndianRupee, Users } from "lucide-react";
@@ -52,6 +51,50 @@ const featuredProducts: Product[] = [
     farmerId: "f1",
     farmerName: "Ramesh Kumar"
   },
+  {
+    id: "5",
+    name: "Organic Brown Rice",
+    price: 85,
+    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=500",
+    description: "Healthy, unpolished brown rice",
+    category: "grains",
+    unit: "kg",
+    farmerId: "f2",
+    farmerName: "Suresh Patel"
+  },
+  {
+    id: "6",
+    name: "Fresh Sweet Limes",
+    price: 60,
+    image: "https://images.unsplash.com/photo-1587496679742-bad502958fbf?auto=format&fit=crop&q=80&w=500",
+    description: "Juicy and sweet mosambi",
+    category: "fruits",
+    unit: "kg",
+    farmerId: "f3",
+    farmerName: "Anita Desai"
+  },
+  {
+    id: "7",
+    name: "Red Onions",
+    price: 35,
+    image: "https://images.unsplash.com/photo-1587049633312-d628ae50a8ae?auto=format&fit=crop&q=80&w=500",
+    description: "Fresh and crisp red onions",
+    category: "vegetables",
+    unit: "kg",
+    farmerId: "f1",
+    farmerName: "Ramesh Kumar"
+  },
+  {
+    id: "8",
+    name: "Organic Turmeric Powder",
+    price: 180,
+    image: "https://images.unsplash.com/photo-1615485500704-8e990de13bf2?auto=format&fit=crop&q=80&w=500",
+    description: "Pure organic turmeric powder",
+    category: "spices",
+    unit: "500g",
+    farmerId: "f4",
+    farmerName: "Priya Sharma"
+  }
 ];
 
 // Mock data for categories

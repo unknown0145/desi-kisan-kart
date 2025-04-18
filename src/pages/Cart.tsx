@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -129,7 +128,7 @@ const Cart = () => {
               <Button 
                 size="lg" 
                 className="w-full bg-kisan-green hover:bg-kisan-lightGreen"
-                onClick={handleCheckout}
+                onClick={() => navigate("/checkout")}
               >
                 Proceed to Checkout
                 <ArrowRight className="ml-2 h-4 w-4" />
