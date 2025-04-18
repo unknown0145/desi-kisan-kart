@@ -1,5 +1,6 @@
+
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -9,6 +10,7 @@ import CartItem from "@/components/CartItem";
 import { toast } from "sonner";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const { items, clearCart, getCartTotal } = useCart();
   const cartTotal = getCartTotal();
   const shippingFee = cartTotal >= 500 ? 0 : 60;
