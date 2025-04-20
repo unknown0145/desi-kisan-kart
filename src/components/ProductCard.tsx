@@ -1,12 +1,13 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, IndianRupee, Plus, Minus } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/context/CartContext";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 interface ProductCardProps {
   product: Product;
@@ -16,10 +17,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
   const [showQuantity, setShowQuantity] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     addToCart(product, quantity);
     setShowQuantity(true);
   };
@@ -105,3 +112,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 };
 
 export default ProductCard;
+
