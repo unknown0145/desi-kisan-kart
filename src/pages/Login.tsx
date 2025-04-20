@@ -45,17 +45,16 @@ const Login = () => {
     <div className="container-custom max-w-md py-12">
       <Card className="animate-fade-in">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center animate-[fade-in_0.4s_ease-out_0.2s] opacity-0 [animation-fill-mode:forwards]">
+          <CardTitle className="text-2xl text-center">
             Login to your account
           </CardTitle>
-          <CardDescription className="text-center animate-[fade-in_0.4s_ease-out_0.4s] opacity-0 [animation-fill-mode:forwards]">
+          <CardDescription className="text-center">
             Enter your email and password to login
           </CardDescription>
         </CardHeader>
         <Tabs 
           defaultValue={userType} 
           onValueChange={(value) => setUserType(value as "customer" | "farmer")}
-          className="animate-[fade-in_0.4s_ease-out_0.6s] opacity-0 [animation-fill-mode:forwards]"
         >
           <div className="px-4 py-2">
             <TabsList className="grid w-full grid-cols-2">
@@ -67,7 +66,7 @@ const Login = () => {
           <TabsContent value="customer">
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-4">
-                <div className="space-y-2 animate-[slide-in-right_0.4s_ease-out_0.8s] opacity-0 [animation-fill-mode:forwards]">
+                <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input 
                     id="email" 
@@ -78,7 +77,7 @@ const Login = () => {
                     required
                   />
                 </div>
-                <div className="space-y-2 animate-[slide-in-right_0.4s_ease-out_1s] opacity-0 [animation-fill-mode:forwards]">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
                     <Link to="/forgot-password" className="text-sm text-kisan-green hover:underline">
@@ -94,7 +93,7 @@ const Login = () => {
                   />
                 </div>
               </CardContent>
-              <CardFooter className="flex flex-col animate-[fade-in_0.4s_ease-out_1.2s] opacity-0 [animation-fill-mode:forwards]">
+              <CardFooter className="flex flex-col">
                 <Button type="submit" className="w-full bg-kisan-green hover:bg-kisan-lightGreen">
                   Login
                 </Button>
@@ -111,7 +110,7 @@ const Login = () => {
           <TabsContent value="farmer">
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-4">
-                <div className="space-y-2 animate-[slide-in-right_0.4s_ease-out_0.8s] opacity-0 [animation-fill-mode:forwards]">
+                <div className="space-y-2">
                   <Label htmlFor="farmer-email">Email</Label>
                   <Input 
                     id="farmer-email" 
@@ -122,7 +121,7 @@ const Login = () => {
                     required
                   />
                 </div>
-                <div className="space-y-2 animate-[slide-in-right_0.4s_ease-out_1s] opacity-0 [animation-fill-mode:forwards]">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="farmer-password">Password</Label>
                     <Link to="/forgot-password" className="text-sm text-kisan-green hover:underline">
@@ -138,7 +137,7 @@ const Login = () => {
                   />
                 </div>
               </CardContent>
-              <CardFooter className="flex flex-col animate-[fade-in_0.4s_ease-out_1.2s] opacity-0 [animation-fill-mode:forwards]">
+              <CardFooter className="flex flex-col">
                 <Button type="submit" className="w-full bg-kisan-orange hover:bg-kisan-yellow">
                   Login as Farmer
                 </Button>
