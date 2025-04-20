@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import FarmerProfile from "./pages/FarmerProfile";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import FarmerDashboard from "./pages/FarmerDashboard";
@@ -38,6 +39,7 @@ const App = () => (
                   <Route path="/register" element={<Register />} />
                   <Route path="/products" element={<Products />} />
                   <Route path="/products/:id" element={<ProductDetail />} />
+                  <Route path="/farmer/:id" element={<FarmerProfile />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/profile" element={<Profile />} />

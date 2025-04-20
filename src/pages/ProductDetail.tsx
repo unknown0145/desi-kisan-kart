@@ -11,104 +11,17 @@ import {
   Truck, 
   Check, 
   IndianRupee, 
-  User 
+  User, 
+  Star
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/context/CartContext";
+import { allProducts } from "@/data/products";
 import { toast } from "sonner";
 
-// Mock data for a single product
-const allProducts: Product[] = [
-  {
-    id: "1",
-    name: "Fresh Organic Tomatoes",
-    price: 40,
-    image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=500",
-    description: "Juicy, ripe tomatoes grown without pesticides. Our tomatoes are grown in natural conditions with organic compost and no chemicals. These vine-ripened tomatoes are harvested at peak ripeness for maximum flavor and nutrition.",
-    category: "vegetables",
-    unit: "kg",
-    farmerId: "f1",
-    farmerName: "Ramesh Kumar"
-  },
-  {
-    id: "2",
-    name: "Premium Basmati Rice",
-    price: 120,
-    image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&q=80&w=500",
-    description: "Aromatic long-grain basmati rice from the foothills of the Himalayas. Aged for 12 months to enhance flavor and aroma. Perfect for biryanis, pulaos, and everyday cooking. 100% authentic, premium quality rice.",
-    category: "grains",
-    unit: "kg",
-    farmerId: "f2",
-    farmerName: "Suresh Patel"
-  },
-  {
-    id: "3",
-    name: "Organic Alphonso Mangoes",
-    price: 350,
-    image: "https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&q=80&w=500",
-    description: "Sweet and flavorful Alphonso mangoes, known as the 'King of Mangoes'. Hand-picked from sustainable orchards in Ratnagiri, Maharashtra. These mangoes are naturally ripened without any artificial chemicals. Rich in flavor with a smooth, fiber-less pulp.",
-    category: "fruits",
-    unit: "dozen",
-    farmerId: "f3",
-    farmerName: "Anita Desai"
-  },
-  {
-    id: "4",
-    name: "Fresh Green Spinach",
-    price: 30,
-    image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=500",
-    description: "Nutritious leafy green vegetable, locally grown and harvested daily. Our spinach is washed and ready to use, perfect for salads, sabzis, and smoothies. Rich in iron, vitamins, and antioxidants.",
-    category: "vegetables",
-    unit: "bunch",
-    farmerId: "f1",
-    farmerName: "Ramesh Kumar"
-  },
-  {
-    id: "5",
-    name: "Desi Dahi (Yogurt)",
-    price: 60,
-    image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&q=80&w=500",
-    description: "Creamy, homemade style yogurt made from fresh, pasteurized milk. Made using traditional methods with active cultures for a thick, creamy texture. Perfect for raita, smoothies, or enjoying on its own.",
-    category: "dairy",
-    unit: "500g",
-    farmerId: "f4",
-    farmerName: "Lakshmi Devi"
-  },
-  {
-    id: "6",
-    name: "Fresh Farm Eggs",
-    price: 90,
-    image: "https://images.unsplash.com/photo-1569288063643-5d5567bb4783?auto=format&fit=crop&q=80&w=500",
-    description: "Free-range eggs from healthy hens raised in natural conditions. Our hens are fed quality grains without antibiotics or hormones. The eggs have bright orange yolks and strong shells, indicating high nutritional value.",
-    category: "dairy",
-    unit: "dozen",
-    farmerId: "f4",
-    farmerName: "Lakshmi Devi"
-  },
-  {
-    id: "7",
-    name: "Organic Wheat Flour",
-    price: 65,
-    image: "https://images.unsplash.com/photo-1599180856482-60bde9cf9d42?auto=format&fit=crop&q=80&w=500",
-    description: "Stone-ground whole wheat flour from organically grown wheat. Our atta is ground in traditional stone chakki, preserving nutrients and natural flavor. Perfect for making soft, fluffy rotis and parathas.",
-    category: "grains",
-    unit: "kg",
-    farmerId: "f2",
-    farmerName: "Suresh Patel"
-  },
-  {
-    id: "8",
-    name: "Fresh Green Chillies",
-    price: 20,
-    image: "https://images.unsplash.com/photo-1573590937232-5ae570d2ad13?auto=format&fit=crop&q=80&w=500",
-    description: "Spicy green chillies that add heat and flavor to any dish. These fresh chillies are hand-picked daily from our farms. Perfect for tempering, making chutneys, or adding to curries for extra spice.",
-    category: "vegetables",
-    unit: "100g",
-    farmerId: "f1",
-    farmerName: "Ramesh Kumar"
-  },
-];
+// Mock data for a single product is now moved to data/products.ts
 
+// Related products mapping
 const relatedProductIds = {
   "1": ["4", "8"], // Related to tomatoes
   "2": ["7"],      // Related to rice
@@ -120,11 +33,40 @@ const relatedProductIds = {
   "8": ["1", "4"], // Related to chillies
 };
 
+// Mock data for farmers
+const farmers = [
+  {
+    id: "f1",
+    name: "Ramesh Kumar",
+    image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=1000",
+    rating: 4.8
+  },
+  {
+    id: "f2",
+    name: "Suresh Patel",
+    image: "https://images.unsplash.com/photo-1594008671689-851108a4fe28?q=80&w=1000",
+    rating: 4.6
+  },
+  {
+    id: "f3",
+    name: "Anita Desai",
+    image: "https://images.unsplash.com/photo-1622032493735-965eb4d4bfa7?q=80&w=1000",
+    rating: 4.9
+  },
+  {
+    id: "f4",
+    name: "Lakshmi Devi",
+    image: "https://images.unsplash.com/photo-1621507387091-cbdd25abcf55?q=80&w=1000",
+    rating: 4.7
+  }
+];
+
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [farmerInfo, setFarmerInfo] = useState<any>(null);
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -137,6 +79,12 @@ const ProductDetail = () => {
       const related = relatedProductIds[id as keyof typeof relatedProductIds] || [];
       const relatedProductsData = allProducts.filter((p) => related.includes(p.id));
       setRelatedProducts(relatedProductsData);
+      
+      // Get farmer information
+      const farmer = farmers.find(f => f.id === foundProduct.farmerId);
+      if (farmer) {
+        setFarmerInfo(farmer);
+      }
     }
     
     // Reset quantity when product changes
@@ -196,10 +144,38 @@ const ProductDetail = () => {
           
           <p className="text-gray-700 mb-6">{product.description}</p>
           
-          <div className="flex items-center mb-6">
-            <User className="h-4 w-4 mr-2 text-kisan-green" />
-            <span>Farmer: {product.farmerName}</span>
-          </div>
+          {/* Farmer Info Card */}
+          {farmerInfo && (
+            <Card className="mb-6">
+              <CardContent className="p-4">
+                <Link to={`/farmer/${farmerInfo.id}`} className="flex items-center space-x-4">
+                  <div className="h-12 w-12 rounded-full overflow-hidden">
+                    <img 
+                      src={farmerInfo.image} 
+                      alt={farmerInfo.name} 
+                      className="h-full w-full object-cover" 
+                    />
+                  </div>
+                  <div>
+                    <p className="font-medium">Sold by: {farmerInfo.name}</p>
+                    <div className="flex items-center">
+                      <Star className="h-3.5 w-3.5 text-yellow-500 mr-1" />
+                      <span className="text-sm">{farmerInfo.rating} Rating</span>
+                    </div>
+                  </div>
+                  <div className="ml-auto">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      asChild
+                    >
+                      <span>View Profile</span>
+                    </Button>
+                  </div>
+                </Link>
+              </CardContent>
+            </Card>
+          )}
           
           <div className="mb-6">
             <div className="flex items-center space-x-2 mb-2">
