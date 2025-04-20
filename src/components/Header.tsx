@@ -26,7 +26,7 @@ const Header = () => {
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 hover-scale">
             <span className="text-2xl font-bold text-kisan-green">
               देसी<span className="text-kisan-orange">किसान</span>कार्ट
             </span>
@@ -35,19 +35,19 @@ const Header = () => {
           {/* Navigation */}
           {!isMobile ? (
             <nav className="hidden md:flex items-center space-x-6">
-              <Link to="/" className="text-gray-700 hover:text-kisan-green transition duration-300">
+              <Link to="/" className="text-gray-700 hover:text-kisan-green transition duration-300 hover-scale">
                 Home
               </Link>
-              <Link to="/products" className="text-gray-700 hover:text-kisan-green transition duration-300">
+              <Link to="/products" className="text-gray-700 hover:text-kisan-green transition duration-300 hover-scale">
                 Products
               </Link>
               {userType === "farmer" && (
-                <Link to="/farmer-dashboard" className="text-gray-700 hover:text-kisan-green transition duration-300">
+                <Link to="/farmer-dashboard" className="text-gray-700 hover:text-kisan-green transition duration-300 hover-scale">
                   Dashboard
                 </Link>
               )}
               {userType === "customer" && (
-                <Link to="/profile" className="text-gray-700 hover:text-kisan-green transition duration-300">
+                <Link to="/profile" className="text-gray-700 hover:text-kisan-green transition duration-300 hover-scale">
                   My Profile
                 </Link>
               )}
@@ -58,7 +58,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             {user ? (
               <>
-                <Link to="/cart" className="relative">
+                <Link to="/cart" className="relative hover-scale">
                   <ShoppingCart className="h-6 w-6 text-gray-700 hover:text-kisan-green transition duration-300" />
                   {cartItemCount > 0 && (
                     <span className="absolute -top-2 -right-2 bg-kisan-red text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -69,7 +69,7 @@ const Header = () => {
                 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="relative h-8 w-8 rounded-full">
+                    <Button variant="ghost" size="sm" className="relative h-8 w-8 rounded-full hover-scale">
                       <User className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -106,13 +106,13 @@ const Header = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => navigate("/login")}
-                  className="hidden sm:inline-flex"
+                  className="hidden sm:inline-flex hover-scale"
                 >
                   Login
                 </Button>
                 <Button
                   onClick={() => navigate("/register")}
-                  className="hidden sm:inline-flex"
+                  className="hidden sm:inline-flex hover-scale"
                 >
                   Register
                 </Button>
@@ -122,7 +122,7 @@ const Header = () => {
             {isMobile && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="hover-scale">
                     <Menu className="h-6 w-6" />
                   </Button>
                 </DropdownMenuTrigger>
