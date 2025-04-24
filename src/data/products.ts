@@ -432,7 +432,7 @@ export const allProducts: Product[] = [
     id: "39",
     name: "Pure Cow Ghee",
     price: 550,
-    image: "https://images.unsplash.com/photo-1589411454940-67a017535ecf?auto=format&fit=crop&q=80&w=500",
+    image: "https://www.istockphoto.com/photos/ghee",
     description: "Traditional clarified butter made from pure cow's milk. Our ghee is prepared using the age-old bilona method, resulting in a rich, nutty flavor and aroma that enhances any dish it's added to.",
     category: "dairy",
     unit: "500g",
