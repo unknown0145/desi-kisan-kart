@@ -476,7 +476,7 @@ export const allProducts: Product[] = [
     id: "43",
     name: "Homestyle Buttermilk",
     price: 40,
-    image: "https://images.unsplash.com/photo-1524503033411-c9566986fc8f?auto=format&fit=crop&q=80&w=500",
+    image: "",
     description: "Refreshing spiced buttermilk made from churned yogurt. Our chaas is lightly flavored with cumin, salt, and fresh coriander, making it perfect for digestion, especially after heavy meals.",
     category: "dairy",
     unit: "liter",
